@@ -1,3 +1,9 @@
 [submodule "themes/solarized"]
-           path = themes/solarized
-           url = https://github.com/sellout/emacs-color-theme-solarized.git
+	path = themes/solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git
+[submodule "packages/structured-haskell-mode"]
+	path = packages/structured-haskell-mode
+	url = https://github.com/chrisdone/structured-haskell-mode.git
+[submodule "packages/hindent"]
+	path = packages/hindent
+	url = http://github.com/chrisdone/hindent.git

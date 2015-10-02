@@ -29,3 +29,6 @@ tramp
 
 # cask packages
 .cask/
+ac-comphist.dat
+ido.last
+ensime

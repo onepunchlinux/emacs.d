@@ -5,6 +5,9 @@
 (require 'flx-ido)
 (require 'dired-x)
 (require 'paredit)
+(require 'web-mode)
+(require 'auto-complete)
+(require 'ensime)
 
 ;; Functions
 
@@ -28,6 +31,9 @@
 
   (defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
   (setq backup-directory-alist (list (cons "." backup-dir))))
+
+(defun json-pretty-print-buffer ()
+  (json-reformat-region (point-min) (point-max)))
 
 (defun auto-chmod ()
   "If we're in a script buffer, then chmod +x that script."
@@ -55,18 +61,6 @@
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
 
-(defun set-ansi-colors ()
-  (interactive)
-  (setq ansi-color-names-vector
-        (list zenburn-bg
-              zenburn-red
-              zenburn-green
-              zenburn-yellow
-              zenburn-blue
-              zenburn-magenta
-              zenburn-cyan
-              zenburn-fg))
-  (setq ansi-color-map (ansi-color-make-color-map)))
 
 (defun set-font-size (point-size)
   (interactive "sWhat size? ")
@@ -81,6 +75,13 @@
 (defun ido-define-keys ()
   (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
   (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+
+(defun toggle-solarized ()
+  (interactive)
+  (let ((new-mode (if (eq frame-background-mode 'dark) 'light 'dark)))
+    (setq frame-background-mode new-mode)
+    (set-frame-parameter nil 'background-mode new-mode))
+  (enable-theme 'solarized))
 
 ;; Theme/Look
 
@@ -104,15 +105,11 @@
 
 (show-paren-mode 1) ;parens
 
-(setq show-paren-delay 0) ;no delay
-
 ;; Mouse
 
 (xterm-mouse-mode t)
 
 (defun track-mouse (e))
-
-(setq mouse-sel-mode t)
 
 ;; Copy and Paste
 (setq x-select-enable-clipboard t)
@@ -149,9 +146,14 @@
 
 (global-set-key (kbd "C-x l") "λ")
 
+(global-set-key (kbd "C-x t") 'toggle-solarized)
+
 ;; Mode specific keybindings
 
-(define-key shell-mode-map (kbd "C-c C-k") 'erase-buffer)
+(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+(ac-set-trigger-key "TAB")
+
+;(define-key shell-mode-map (kbd "C-c C-k") 'erase-buffer)
 
 ;; Disable defaults
 
@@ -196,7 +198,7 @@
 
 ;; Default mode settings
 
-(setq default-major-mode 'text-mode)
+(setq major-mode 'text-mode)
 (setq-default indent-tabs-mode nil)
 (setq-default cursor-type 'bar)
 
@@ -209,29 +211,53 @@
 (setq css-indent-offset 2)
 (setq js-indent-level 2)
 
+(setq ac-auto-start nil)
+
 ;; Global settings
 
 (setq tab-width 2)
 (setq scroll-step 1)
 
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq frame-background-mode 'dark)
+
+(ac-config-default)
 
 ;; Hooks
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'after-save-hook 'auto-chmod)
 
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-
-(add-hook 'shell-mode-hook 'set-ansi-colors)
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(add-hook 'scala-mode-hook #'yas-minor-mode)
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+              (set-frame-parameter frame 'background-mode mode)
+              (set-terminal-parameter frame 'background-mode mode))
+            (enable-theme 'solarized)))
+
+
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+
 ;; Autoloads
+
+(add-to-list 'auto-mode-alist (cons "\\.hs\\'" 'haskell-mode))
+(add-to-list 'auto-mode-alist (cons "\\.cabal\\'" 'haskell-cabal-mode))
+(add-to-list 'auto-mode-alist '("\\.hcr\\'" . haskell-core-mode))
 
 (add-to-list 'auto-mode-alist (cons "\\.el\\'" 'emacs-lisp-mode))
 (add-to-list 'auto-mode-alist (cons "\\.md\\'" 'markdown-mode))
 (add-to-list 'auto-mode-alist (cons "\\.markdown\\'" 'markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 ;; Environment settings
 
@@ -242,5 +268,20 @@
 (set-keyboard-coding-system 'utf-8)
 
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+(mapc (lambda (major-mode)
+        (font-lock-add-keywords
+         major-mode
+         '(("(\\|)\\|\\[\\|\\]" . 'esk-paren-face))))
+      '(emacs-lisp-mode haskell-mode))
+
+;; Safe local variables
+
+(custom-set-variables
+ '(safe-local-variable-values
+   (quote ((haskell-indent-spaces . 4)
+           (haskell-process-use-ghci . 4)
+           (haskell-indent-spaces . 2)
+           (haskell-process-type . cabal-repl)))))
 
 (provide 'global)
