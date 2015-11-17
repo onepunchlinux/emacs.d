@@ -1,5 +1,5 @@
 
-;; Standard libraries needed
+;; STANDARD libraries needed
 
 (require 'cl)
 
@@ -12,6 +12,8 @@
     flycheck
     idris-mode
     elixir-mode
+    ruby-end
+    alchemist
     web-mode
     markdown-mode
     css-mode
@@ -23,6 +25,7 @@
     ag
     elm-mode
     auto-complete
+    company
     json-reformat
     json-mode
     ensime
@@ -34,7 +37,8 @@
 
 (defvar init-configs
   '("global"
-    "elm"
+    ;;"elm"
+    "elixir"
     "markdown"
     "javascript"
     "haskell"
@@ -85,4 +89,6 @@
 
 ;; Debug mode
 
-(setq debug-on-error t)
+;(setq debug-on-error t)
+
+(load-file "/usr/share/emacs/site-lisp/ProofGeneral/generic/proof-site.el")

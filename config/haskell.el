@@ -137,7 +137,7 @@
 ;; Mode settings
 
 (custom-set-variables
- '(haskell-process-type 'stack-ghci)
+ '(haskell-process-type 'cabal-repl)
  '(haskell-tags-on-save nil)
  '(haskell-stylish-on-save nil)
  '(haskell-process-suggest-remove-import-lines t)
@@ -150,8 +150,8 @@
  '(haskell-interactive-mode-eval-mode 'haskell-mode)
  '(haskell-process-path-ghci "ghci")
  '(haskell-process-args-ghci '("-ferror-spans"))
- '(haskell-process-args-cabal-repl
-   '("--ghc-option=-ferror-spans" "--with-ghc=ghci-ng"))
+ ;'(haskell-process-args-cabal-repl
+   ;'("--ghc-option=-ferror-spans" "--with-ghc=ghci"))
  '(haskell-process-generate-tags nil)
  '(haskell-interactive-popup-errors nil)
  '(haskell-complete-module-preferred
