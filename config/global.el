@@ -8,6 +8,7 @@
 (require 'web-mode)
 (require 'auto-complete)
 (require 'ensime)
+(require 'writegood-mode)
 
 ;; Functions
 
@@ -147,6 +148,10 @@
 (global-set-key (kbd "C-x l") "λ")
 
 (global-set-key (kbd "C-x t") 'toggle-solarized)
+
+(global-set-key "\C-cg" 'writegood-mode)
+(global-set-key "\C-c\C-gg" 'writegood-grade-level)
+(global-set-key "\C-c\C-ge" 'writegood-reading-ease)
 
 ;; Mode specific keybindings
 

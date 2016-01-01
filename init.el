@@ -30,6 +30,7 @@
     json-mode
     ensime
     scala-mode2
+    writegood-mode
     ))
 
 ;; Languages to implement
@@ -37,7 +38,7 @@
 
 (defvar init-configs
   '("global"
-    ;;"elm"
+    "elm"
     "elixir"
     "markdown"
     "javascript"

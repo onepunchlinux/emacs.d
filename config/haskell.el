@@ -178,6 +178,11 @@
 
 ;; Keybindings
 
+(define-key haskell-mode-map (kbd "C-c o") (lambda ()
+                                             (interactive)
+                                             (haskell-sort-imports)
+                                             (haskell-align-imports)))
+
 (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
 (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
 (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
@@ -191,3 +196,7 @@
 
 (define-key haskell-mode-map (kbd "M-,") 'haskell-who-calls)
 (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+
+(define-key haskell-presentation-mode-map (kbd "c") nil)
+(define-key haskell-presentation-mode-map (kbd "q") nil)
+(define-key haskell-presentation-mode-map (kbd "C-c C-p") 'haskell-presentation-clear)
