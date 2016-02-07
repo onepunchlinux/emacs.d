@@ -86,7 +86,7 @@
 
 ;; Theme/Look
 
-(set-frame-font "dejavu sans mono 10")
+(set-frame-font "dejavu sans mono 6")
 
 (scroll-bar-mode -1) ;disable scrollbar
 (tool-bar-mode -1)
