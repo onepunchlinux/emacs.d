@@ -28,7 +28,7 @@
 (flycheck-define-checker elixir-mix
   "An Elixir syntax checker using the Elixir interpreter."
 
-  :command ("mix"
+  :command (""
             "compile"
             source)
   :error-patterns
@@ -39,8 +39,7 @@
             line ": "
             (message)
             line-end))
-  :modes elixir-mode
-  :next-checkers (elixir-dogma elixir-dialyzer))
+  :modes elixir-mode)
 
 (defvar flycheck-elixir-dogma-executable)
 (setq flycheck-elixir-dogma-executable mix-executable)
@@ -79,9 +78,12 @@
 	  line-end))
   :modes elixir-mode)
 
-
+(flycheck-add-next-checker 'elixir-mix 'elixir-dogma)
+(flycheck-add-next-checker 'elixir-mix 'elixir-dogma)
 
 (add-to-list 'flycheck-checkers 'elixir-mix)
+(add-to-list 'flycheck-checkers 'elixir-dogma 'append)
+(add-to-list 'flycheck-checkers 'elixir-dialyzer 'append)
 
 ;; Custom variables
 

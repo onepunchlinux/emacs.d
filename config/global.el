@@ -86,7 +86,7 @@
 
 ;; Theme/Look
 
-(set-frame-font "dejavu sans mono 6")
+(set-frame-font "dejavu sans mono 10")
 
 (scroll-bar-mode -1) ;disable scrollbar
 (tool-bar-mode -1)
@@ -285,11 +285,11 @@
 
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-(mapc (lambda (major-mode)
-        (font-lock-add-keywords
-         major-mode
-         '(("(\\|)\\|\\[\\|\\]" . 'esk-paren-face))))
-      '(emacs-lisp-mode haskell-mode))
+;; (mapc (lambda (major-mode)
+;;         (font-lock-add-keywords
+;;          major-mode
+;;          '(("(\\|)\\|\\[\\|\\]" . 'esk-paren-face))))
+;;       '(emacs-lisp-mode haskell-mode))
 
 ;; Safe local variables
 

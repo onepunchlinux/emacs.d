@@ -24,6 +24,9 @@
     ac-js2
     ag
     elm-mode
+    purescript-mode
+    flycheck-purescript
+    psc-ide
     auto-complete
     company
     json-reformat
@@ -43,6 +46,7 @@
     "markdown"
     "javascript"
     "haskell"
+    "purescript"
     ))
 
 (defvar init-themes
@@ -91,4 +95,3 @@
 ;; Debug mode
 
 ;(setq debug-on-error t)
-
