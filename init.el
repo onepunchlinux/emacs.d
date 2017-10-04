@@ -7,8 +7,8 @@
 
 (defvar init-packages
   '(evil
+    fsharp-mode
     paredit
-    flx-ido
     flycheck
     idris-mode
     elixir-mode
@@ -23,6 +23,9 @@
     js2-mode
     ac-js2
     ag
+    f
+    let-alist
+    s
     elm-mode
     purescript-mode
     flycheck-purescript
@@ -32,8 +35,18 @@
     json-reformat
     json-mode
     ensime
-    scala-mode2
     writegood-mode
+    projectile
+    ag
+    helm
+    helm-projectile
+    helm-ag
+    helm-flx
+    helm-fuzzier
+    w3m
+    rust-mode
+    intero
+    floobits
     ))
 
 ;; Languages to implement
@@ -42,11 +55,15 @@
 (defvar init-configs
   '("global"
     "elm"
+    "fsharp"
     "elixir"
     "markdown"
     "javascript"
     "haskell"
     "purescript"
+    "git"
+    "workflow"
+    "web"
     ))
 
 (defvar init-themes
@@ -54,11 +71,14 @@
 
 ;; Load packages
 
+;(add-to-list 'package-archives
+;             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(package-initialize)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
-(package-initialize)
+                         ("melpa" . "https://melpa.milkbox.net/packages/")))
 
 (when (not package-archive-contents)
   (package-refresh-contents)
@@ -85,6 +105,10 @@
 
 ;; Set default theme
 (load-theme 'solarized t)
+;(set-frame-parameter nil 'background-mode mode)
+;(when (not (display-graphic-p (selected-frame)))
+;  (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
+;(enable-theme 'solarized)
 
 ;; Mode initializations
 
@@ -95,3 +119,42 @@
 ;; Debug mode
 
 ;(setq debug-on-error t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(haskell-complete-module-preferred
+   (quote
+    ("Data.ByteString" "Data.ByteString.Lazy" "Data.Conduit" "Data.Function" "Data.List" "Data.Map" "Data.Maybe" "Data.Monoid" "Data.Ord")))
+ '(haskell-interactive-mode-eval-mode (quote haskell-mode))
+ '(haskell-interactive-mode-eval-pretty nil)
+ '(haskell-interactive-mode-include-file-name nil)
+ '(haskell-interactive-popup-errors nil)
+ '(haskell-process-args-ghci (quote ("-ferror-spans")))
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-generate-tags nil)
+ '(haskell-process-log t)
+ '(haskell-process-path-ghci "ghci")
+ '(haskell-process-reload-with-fbytecode nil)
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-type (quote cabal-repl))
+ '(haskell-process-use-presentation-mode t)
+ '(haskell-stylish-on-save nil)
+ '(haskell-tags-on-save nil)
+ '(package-selected-packages
+   (quote
+    (floobits rust-mode w3m yaml-mode writegood-mode web-mode ruby-end purescript-mode psc-ide paredit markdown-mode json-mode idris-mode helm-projectile helm-fuzzier helm-flx helm-ag gitignore-mode gitconfig-mode ghc flycheck-purescript flx-ido evil ensime elm-mode auto-complete alchemist ag ac-js2)))
+ '(psc-ide-executable "/home/whitehead/.local/bin" t)
+ '(safe-local-variable-values
+   (quote
+    ((haskell-indent-spaces . 4)
+     (haskell-process-use-ghci . 4)
+     (haskell-indent-spaces . 2)
+     (haskell-process-type . cabal-repl)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

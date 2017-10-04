@@ -20,71 +20,40 @@
                (ruby-end-mode +1)))
 
 ;; Flycheck checkers
-(defvar mix-executable (concat (expand-file-name "~/.bin") "/mix-from-git-root"))
+(defun flycheck-elixir-dialyxir--mix-project-root (_checker)
+  "This method get the mix-project-root from current directory."
+  (or
+   (and
+    buffer-file-name
+    (locate-dominating-file buffer-file-name "mix.exs"))
+   default-directory))
 
-(defvar flycheck-elixir-mix-executable)
-(setq flycheck-elixir-mix-executable mix-executable)
+(flycheck-define-checker elixir-dialyxir
+  "Elixir Static Analysis Checker."
+  :command ("mix" "dialyzer" "--fullpath")
+  :working-directory flycheck-elixir-dialyxir--mix-project-root
+  :error-patterns ((info line-start (file-name) ":" line ": " (message) line-end))
+  :modes elixir-mode
+  )
 
-(flycheck-define-checker elixir-mix
-  "An Elixir syntax checker using the Elixir interpreter."
-
-  :command (""
-            "compile"
-            source)
+(flycheck-define-checker elixir-credo
+  "Defines a checker for elixir with credo"
+  :command ("mix" "credo" "--strict" "--format" "flycheck" source-inplace)
+  :working-directory flycheck-elixir-dialyxir--mix-project-root
+  :standard-input t
   :error-patterns
-  ((error line-start "** (" (zero-or-more not-newline) ") "
-          (zero-or-more not-newline) ":" line ": " (message) line-end)
-   (warning line-start
-            (one-or-more (not (syntax whitespace))) ":"
-            line ": "
-            (message)
-            line-end))
-  :modes elixir-mode)
+  (
+   (info line-start (file-name) ":" line ":" column ": " (or "F" "R" "C")  ": " (message) line-end)
+   (info line-start (file-name) ":" line ": " (or "F" "D" "R" "C" "W")  ": " (message) line-end)
+   (warning line-start (file-name) ":" line ":" column ": " (or "D" "W")  ": " (message) line-end)
+   (warning line-start (file-name) ":" line ": " (or "D" "W")  ": " (message) line-end)
+   )
+  :modes (elixir-mode)
+  :next-checkers (elixir-dialyxir)
+)
 
-(defvar flycheck-elixir-dogma-executable)
-(setq flycheck-elixir-dogma-executable mix-executable)
-(flycheck-define-checker elixir-dogma
-  "Defines a checker for elixir with dogma"
-  :command (""
-            "dogma"
-            "--format=flycheck"
-            source)
-  :error-patterns
-  ((info line-start (file-name) ":" line ":" column ": C: "
-         (optional (id (one-or-more (not (any ":")))) ": ") (message) line-end)
-   (warning line-start (file-name) ":" line ":" column ": W: "
-            (optional (id (one-or-more (not (any ":")))) ": ") (message)
-            line-end)
-   (error line-start (file-name) ":" line ":" column ": " (or "E" "F") ": "
-          (optional (id (one-or-more (not (any ":")))) ": ") (message)
-          line-end))
-  :modes elixir-mode)
-
-
-(defvar flycheck-elixir-dialyzer-executable)
-(setq flycheck-elixir-dialyzer-executable mix-executable)
-(flycheck-define-checker elixir-dialyzer
-  "Elixir syntax checker based on dialyzer."
-  :command (""
-            "dialyzer"
-            source)
-  :error-patterns
-  ((error line-start
-	  (file-name)
-	  ":"
-	  line
-	  ":"
-	  (message)
-	  line-end))
-  :modes elixir-mode)
-
-(flycheck-add-next-checker 'elixir-mix 'elixir-dogma)
-(flycheck-add-next-checker 'elixir-mix 'elixir-dogma)
-
-(add-to-list 'flycheck-checkers 'elixir-mix)
-(add-to-list 'flycheck-checkers 'elixir-dogma 'append)
-(add-to-list 'flycheck-checkers 'elixir-dialyzer 'append)
-
+;; (add-to-list 'flycheck-checkers 'elixir-dialyxir)
+;; (add-to-list 'flycheck-checkers 'elixir-credo)
 ;; Custom variables
 
 (setq company-idle-delay 0.5)

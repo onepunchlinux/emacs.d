@@ -5,6 +5,10 @@
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 
+(add-to-list 'load-path "/home/whitehead/.emacs.d/packages/hindent/elisp")
+
+(require 'hindent)
+
 ;; Functions
 
 (defun haskell-interactive-toggle-print-mode ()
@@ -139,7 +143,7 @@
 (custom-set-variables
  '(haskell-process-type 'cabal-repl)
  '(haskell-tags-on-save nil)
- '(haskell-stylish-on-save nil)
+ '(haskell-stylish-on-save t)
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
@@ -165,15 +169,22 @@
      "Data.Monoid"
      "Data.Ord")))
 
+(setq inferior-haskell-find-project-root nil)
 
-;(autoload 'ghc-init "ghc" nil t)
-;(autoload 'ghc-debug "ghc" nil t)
+;; (let ((my-ghc-mod-path (expand-file-name "~/.local/bin")))
+;;   (setenv "PATH" (concat my-ghc-mod-path ":" (getenv "PATH")))
+;;   (add-to-list 'exec-path my-ghc-mod-path))
+
+;; (autoload 'ghc-init "ghc" nil t)
+;; (autoload 'ghc-debug "ghc" nil t)
+;; (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+
 
 ;; Add hook
 
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-;(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook #'hindent-mode)
+;(add-hook 'haskell-mode-hook 'intero-mode)
 
 
 ;; Keybindings
@@ -189,13 +200,11 @@
 (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
 (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
 (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
 
 (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-stack-build)
 (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-stack)
 
 (define-key haskell-mode-map (kbd "M-,") 'haskell-who-calls)
-(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
 
 (define-key haskell-presentation-mode-map (kbd "c") nil)
 (define-key haskell-presentation-mode-map (kbd "q") nil)

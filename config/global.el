@@ -2,7 +2,7 @@
 ;; Load libs
 
 (require 'mouse)
-(require 'flx-ido)
+;; (require 'flx-ido)
 (require 'dired-x)
 (require 'paredit)
 (require 'web-mode)
@@ -70,12 +70,12 @@
                       point-size))))
     (set-face-attribute 'default nil :height size)))
 
-(defun ido-disable-line-truncation ()
-  (set (make-local-variable 'truncate-lines) nil))
+;; (defun ido-disable-line-truncation ()
+  ;; (set (make-local-variable 'truncate-lines) nil))
 
-(defun ido-define-keys ()
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+;; (defun ido-define-keys ()
+  ;; (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  ;; (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
 
 (defun toggle-solarized ()
   (interactive)
@@ -84,8 +84,19 @@
     (set-frame-parameter nil 'background-mode new-mode))
   (enable-theme 'solarized))
 
+(defun set-exec-path-from-shell-PATH ()
+  (let ((path-from-shell (replace-regexp-in-string
+                          "[ \t\n]*$"
+                          ""
+                          (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq eshell-path-env path-from-shell) ; for eshell users
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+
 ;; Theme/Look
 
+(setq default-frame-alist '((font . "dejavu sans mono 10")))
 (set-frame-font "dejavu sans mono 10")
 
 (scroll-bar-mode -1) ;disable scrollbar
@@ -173,22 +184,22 @@
 (when (fboundp 'winner-mode)
       (winner-mode 1))
 
-(ido-mode 1)
-(flx-ido-mode 1)
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
-(setq ido-decorations (quote ("\n-> "
-                              ""
-                              "\n   "
-                              "\n   ..."
-                              "[" "]"
-                              " [No match]"
-                              " [Matched]"
-                              " [Not readable]"
-                              " [Too big]"
-                              " [Confirm]")))
-(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
-(add-hook 'ido-setup-hook 'ido-define-keys)
+;; (ido-mode 1)
+;; (flx-ido-mode 1)
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-use-faces nil)
+;; (setq ido-decorations (quote ("\n-> "
+;;                               ""
+;;                               "\n   "
+;;                               "\n   ..."
+;;                               "[" "]"
+;;                               " [No match]"
+;;                               " [Matched]"
+;;                               " [Not readable]"
+;;                               " [Too big]"
+;;                               " [Confirm]")))
+;; (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
+;; (add-hook 'ido-setup-hook 'ido-define-keys)
 
 (global-font-lock-mode 1)
 
@@ -207,8 +218,8 @@
 (setq-default indent-tabs-mode nil)
 (setq-default cursor-type 'bar)
 
-(setq ido-ignore-files '("\\.dyn_hi$""\\.dyn_o$""\\.hi$" "\\.o$" "\\.tags$" "^\\.ghci$"))
-(setq ido-max-directory-size 200000)
+;; (setq ido-ignore-files '("\\.dyn_hi$""\\.dyn_o$""\\.hi$" "\\.o$" "\\.tags$" "^\\.ghci$"))
+;; (setq ido-max-directory-size 200000)
 
 (setq web-mode-markup-indent-offset 2)
 (setq web-mode-css-indent-offset 2)
@@ -254,7 +265,7 @@
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
-            (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+            (let ((mode 'dark))
               (set-frame-parameter frame 'background-mode mode)
               (set-terminal-parameter frame 'background-mode mode))
             (enable-theme 'solarized)))
@@ -301,3 +312,7 @@
            (haskell-process-type . cabal-repl)))))
 
 (provide 'global)
+
+;; PATH
+
+(set-exec-path-from-shell-PATH)
