@@ -96,12 +96,12 @@
 
 ;; Theme/Look
 
-(setq default-frame-alist '((font . "dejavu sans mono 10")))
-(set-frame-font "dejavu sans mono 10")
+(setq default-frame-alist '((font . "dejavu sans mono 13")))
+(set-frame-font "dejavu sans mono 13")
 
-(scroll-bar-mode -1) ;disable scrollbar
-(tool-bar-mode -1)
-(menu-bar-mode -1)
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (setq inhibit-startup-message t) ;disable start page
 (setq inhibit-startup-echo-area-message t)
@@ -316,3 +316,9 @@
 ;; PATH
 
 (set-exec-path-from-shell-PATH)
+
+;; YASNIPPET
+(yas-global-mode 1)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "C-;") #'yas-expand)

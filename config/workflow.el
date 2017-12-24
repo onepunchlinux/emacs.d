@@ -1,5 +1,6 @@
 (require 'helm-config)
 (require 'helm-fuzzier)
+(require 'magit)
 
 (helm-fuzzier-mode 1)
 (helm-mode 1)
@@ -21,6 +22,8 @@
 (global-set-key (kbd "C-x p /") #'helm-projectile-ag)
 (global-set-key (kbd "C-x p p") #'helm-projectile-switch-project)
 (global-set-key (kbd "C-x /") #'helm-locate)
+
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)

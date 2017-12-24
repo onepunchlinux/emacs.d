@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: section-comment
+# key: sc
+# expand-env: ((yas-indent-line 'fixed))
+# --
+
+-- ${1:Section Name} ${1:$(make-string (- 80 4 (length yas/text)) ?-)}
+$0

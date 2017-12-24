@@ -2,12 +2,12 @@
 ;; STANDARD libraries needed
 
 (require 'cl)
+(require 'package)
 
 ;; Packages and configs to load
 
 (defvar init-packages
   '(evil
-    fsharp-mode
     paredit
     flycheck
     idris-mode
@@ -20,6 +20,8 @@
     yaml-mode
     ghc
     haskell-mode
+    intero
+    hindent
     js2-mode
     ac-js2
     ag
@@ -47,15 +49,13 @@
     rust-mode
     intero
     floobits
+    solarized-theme
+    magit
     ))
-
-;; Languages to implement
-;; Haskell
 
 (defvar init-configs
   '("global"
     "elm"
-    "fsharp"
     "elixir"
     "markdown"
     "javascript"
@@ -66,13 +66,7 @@
     "web"
     ))
 
-(defvar init-themes
-  '("solarized"))
-
 ;; Load packages
-
-;(add-to-list 'package-archives
-;             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (package-initialize)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
@@ -80,10 +74,9 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.milkbox.net/packages/")))
 
-(when (not package-archive-contents)
-  (package-refresh-contents)
-  )
-
+(when (not (null (memq nil (mapcar 'package-installed-p init-packages))))
+  (package-refresh-contents))
+  
 (dolist (pkg init-packages)
   (unless (package-installed-p pkg)
     (package-install pkg)))
@@ -98,17 +91,8 @@
 (loop for name in init-configs
       do (load (concat init-currentDir "config/" name ".el")))
 
-;; Load themes
-(loop for theme in init-themes
-      do (let ((file (concat init-currentDir "themes/" theme)))
-           (add-to-list 'custom-theme-load-path file)))
-
 ;; Set default theme
-(load-theme 'solarized t)
-;(set-frame-parameter nil 'background-mode mode)
-;(when (not (display-graphic-p (selected-frame)))
-;  (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
-;(enable-theme 'solarized)
+(load-theme 'solarized-dark t)
 
 ;; Mode initializations
 
@@ -140,11 +124,11 @@
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-type (quote cabal-repl))
  '(haskell-process-use-presentation-mode t)
- '(haskell-stylish-on-save nil)
+ '(haskell-stylish-on-save t)
  '(haskell-tags-on-save nil)
  '(package-selected-packages
    (quote
-    (floobits rust-mode w3m yaml-mode writegood-mode web-mode ruby-end purescript-mode psc-ide paredit markdown-mode json-mode idris-mode helm-projectile helm-fuzzier helm-flx helm-ag gitignore-mode gitconfig-mode ghc flycheck-purescript flx-ido evil ensime elm-mode auto-complete alchemist ag ac-js2)))
+    (magit yaml-mode writegood-mode web-mode w3m use-package solarized-theme rust-mode ruby-end purescript-mode psc-ide paredit markdown-mode json-mode intero idris-mode hindent helm-projectile helm-fuzzier helm-flx helm-ag ghc flycheck-purescript floobits evil-visual-mark-mode ensime elm-mode auto-complete alchemist ag ac-js2)))
  '(psc-ide-executable "/home/whitehead/.local/bin" t)
  '(safe-local-variable-values
    (quote
@@ -158,3 +142,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq mac-command-modifier 'control)
