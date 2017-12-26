@@ -49,7 +49,6 @@
     rust-mode
     intero
     floobits
-    solarized-theme
     magit
     ))
 
@@ -92,7 +91,8 @@
       do (load (concat init-currentDir "config/" name ".el")))
 
 ;; Set default theme
-(load-theme 'solarized-dark t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/solarized")
+(load-theme 'solarized t)
 
 ;; Mode initializations
 
