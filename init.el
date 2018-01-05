@@ -8,8 +8,10 @@
 
 (defvar init-packages
   '(evil
+    exec-path-from-shell
     paredit
     flycheck
+    flycheck-rust
     idris-mode
     elixir-mode
     ruby-end
@@ -50,6 +52,7 @@
     intero
     floobits
     magit
+    go-mode
     ))
 
 (defvar init-configs
@@ -63,15 +66,15 @@
     "git"
     "workflow"
     "web"
+    "rust"
     ))
 
 ;; Load packages
-
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t))
 (package-initialize)
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "https://melpa.milkbox.net/packages/")))
 
 (when (not (null (memq nil (mapcar 'package-installed-p init-packages))))
   (package-refresh-contents))
