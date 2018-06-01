@@ -53,6 +53,7 @@
     floobits
     magit
     go-mode
+    evil-mu4e
     ))
 
 (defvar init-configs
@@ -67,6 +68,7 @@
     "workflow"
     "web"
     "rust"
+    "email"
     ))
 
 ;; Load packages
