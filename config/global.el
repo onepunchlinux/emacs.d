@@ -322,3 +322,11 @@
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "C-;") #'yas-expand)
+
+;; TABS
+(add-hook 'makefile-mode-hook 
+  '(lambda() 
+     (setq indent-tabs-mode t)
+     (setq tab-width 4)
+   )
+)

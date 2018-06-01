@@ -1,16 +1,11 @@
-(require 'purescript-mode)
-;(require 'purescript-mode-autoloads)
-
-(eval-after-load 'flycheck
-      '(flycheck-purescript-setup))
-
-(customize-set-variable 'psc-ide-executable "/home/whitehead/.local/bin")
-
 (require 'psc-ide)
+(require 'purescript-mode)
 
 (add-hook 'purescript-mode-hook
   (lambda ()
     (psc-ide-mode)
     (company-mode)
+    (flycheck-mode)
     (turn-on-purescript-indentation)
+    (turn-on-purescript-unicode-input-method)
     ))

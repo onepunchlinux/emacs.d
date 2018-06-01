@@ -5,4 +5,5 @@
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 
 (custom-set-variables
+ '(haskell-font-lock-symbols t)
  '(haskell-stylish-on-save t))

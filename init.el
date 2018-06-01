@@ -131,7 +131,7 @@
  '(haskell-tags-on-save nil)
  '(package-selected-packages
    (quote
-    (magit yaml-mode writegood-mode web-mode w3m use-package solarized-theme rust-mode ruby-end purescript-mode psc-ide paredit markdown-mode json-mode intero idris-mode hindent helm-projectile helm-fuzzier helm-flx helm-ag ghc flycheck-purescript floobits evil-visual-mark-mode ensime elm-mode auto-complete alchemist ag ac-js2)))
+    (persp-mode-projectile-bridge magit yaml-mode writegood-mode web-mode w3m use-package solarized-theme rust-mode ruby-end purescript-mode psc-ide paredit markdown-mode json-mode intero idris-mode hindent helm-projectile helm-fuzzier helm-flx helm-ag ghc flycheck-purescript floobits evil-visual-mark-mode ensime elm-mode auto-complete alchemist ag ac-js2)))
  '(psc-ide-executable "/home/whitehead/.local/bin" t)
  '(safe-local-variable-values
    (quote
@@ -147,3 +147,5 @@
  )
 
 (setq mac-command-modifier 'control)
+
+(load "~/.emacs.d/lisp/PG/generic/proof-site")
