@@ -96,8 +96,8 @@
 
 ;; Theme/Look
 
-(setq default-frame-alist '((font . "dejavu sans mono 13")))
-(set-frame-font "dejavu sans mono 13")
+(setq default-frame-alist '((font . "dejavu sans mono 9")))
+(set-frame-font "dejavu sans mono 9")
 
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -327,6 +327,6 @@
 (add-hook 'makefile-mode-hook 
   '(lambda() 
      (setq indent-tabs-mode t)
-     (setq tab-width 4)
+     (setq tab-width 2)
    )
 )

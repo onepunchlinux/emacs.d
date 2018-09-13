@@ -68,7 +68,8 @@
     "workflow"
     "web"
     "rust"
-    "email"
+    "go"
+;    "email"
     ))
 
 ;; Load packages
@@ -116,6 +117,7 @@
  '(haskell-complete-module-preferred
    (quote
     ("Data.ByteString" "Data.ByteString.Lazy" "Data.Conduit" "Data.Function" "Data.List" "Data.Map" "Data.Maybe" "Data.Monoid" "Data.Ord")))
+ '(haskell-font-lock-symbols t)
  '(haskell-interactive-mode-eval-mode (quote haskell-mode))
  '(haskell-interactive-mode-eval-pretty nil)
  '(haskell-interactive-mode-include-file-name nil)
