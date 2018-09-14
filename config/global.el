@@ -9,6 +9,9 @@
 (require 'auto-complete)
 (require 'ensime)
 (require 'writegood-mode)
+(require 'whitespace-cleanup-mode)
+(require 'indent-guide)
+
 
 ;; Functions
 
@@ -156,9 +159,8 @@
 
 (global-set-key (kbd "C-x a r") 'align-regexp)
 
-(global-set-key (kbd "C-x l") "λ")
-
-(global-set-key (kbd "C-x t") 'toggle-solarized)
+(global-set-key (kbd "C-s") nil)
+(global-set-key (kbd "C-s t") 'toggle-solarized)
 
 (global-set-key "\C-cg" 'writegood-mode)
 (global-set-key "\C-c\C-gg" 'writegood-grade-level)
@@ -330,3 +332,14 @@
      (setq tab-width 2)
    )
 )
+
+;; Shortcuts
+(global-set-key (kbd "M-u") #'fix-word-upcase)
+(global-set-key (kbd "M-l") #'fix-word-downcase)
+(global-set-key (kbd "M-c") #'fix-word-capitalize)
+
+;; TODO organize later
+(autoload 'enable-paredit-mode "paredit" t)
+(global-whitespace-cleanup-mode)
+(indent-guide-global-mode)
+

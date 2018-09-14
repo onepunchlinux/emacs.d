@@ -1,7 +1,7 @@
 (require 'markdown-mode)
 
 (defvar markdown-code-languages
-  '("haskell" "lisp" "javascript" "c"))
+  '("haskell" "lisp" "javascript" "c" "go"))
 
 (defun markdown-code-fence (beg end)
   "Make a code fence of the given region."

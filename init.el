@@ -47,13 +47,19 @@
     helm-ag
     helm-flx
     helm-fuzzier
+    helm-tramp
     w3m
     rust-mode
     intero
     floobits
     magit
     go-mode
+    gotest
     evil-mu4e
+    fix-word
+    whitespace-cleanup-mode
+    indent-guide
+    discover-my-major
     ))
 
 (defvar init-configs
@@ -69,6 +75,8 @@
     "web"
     "rust"
     "go"
+    "projectile"
+    "tramp"
 ;    "email"
     ))
 
@@ -104,7 +112,7 @@
 
 (evil-mode)
 (load "haskell-mode-autoloads.el")
-
+(setq server-use-tcp t)
 
 ;; Debug mode
 
@@ -151,5 +159,3 @@
  )
 
 (setq mac-command-modifier 'control)
-
-(load "~/.emacs.d/lisp/PG/generic/proof-site")
