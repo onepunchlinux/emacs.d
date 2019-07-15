@@ -7,11 +7,7 @@
 (add-hook 'haskell-mode-hook 'eldoc-mode)
 (add-hook 'haskell-mode-hook
           (lambda ()
-            (paredit-mode t)
             (turn-on-eldoc-mode)
-            (eldoc-add-command
-             'paredit-backward-delete
-             'paredit-close-round)
             (local-set-key (kbd "RET") 'electrify-return-if-match)
             (eldoc-add-command 'electrify-return-if-match)
             (show-paren-mode t)))

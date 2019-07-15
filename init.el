@@ -8,6 +8,7 @@
 
 (defvar init-packages
   '(evil
+    evil-numbers
     exec-path-from-shell
     paredit
     flycheck
@@ -22,6 +23,7 @@
     yaml-mode
     ghc
     haskell-mode
+    dhall-mode
     intero
     hindent
     js2-mode
@@ -60,6 +62,7 @@
     whitespace-cleanup-mode
     indent-guide
     discover-my-major
+    proof-general
     ))
 
 (defvar init-configs
@@ -75,8 +78,8 @@
     "web"
     "rust"
     "go"
-    "projectile"
     "tramp"
+    "python"
 ;    "email"
     ))
 
@@ -112,7 +115,6 @@
 
 (evil-mode)
 (load "haskell-mode-autoloads.el")
-(setq server-use-tcp t)
 
 ;; Debug mode
 
@@ -145,9 +147,15 @@
    (quote
     (persp-mode-projectile-bridge magit yaml-mode writegood-mode web-mode w3m use-package solarized-theme rust-mode ruby-end purescript-mode psc-ide paredit markdown-mode json-mode intero idris-mode hindent helm-projectile helm-fuzzier helm-flx helm-ag ghc flycheck-purescript floobits evil-visual-mark-mode ensime elm-mode auto-complete alchemist ag ac-js2)))
  '(psc-ide-executable "/home/whitehead/.local/bin" t)
+ '(python-indent-offset 2)
  '(safe-local-variable-values
    (quote
-    ((haskell-indent-spaces . 4)
+    ((intero-targets "bawerk:lib" "bawerk:exe:bawerk-exe" "bawerk:test:bawerk-test" "bawerk:bench:bawerk-benchmarks")
+     (intero-targets "fx:lib" "fx:exe:fx-exe" "fx:test:fx-test" "fx:bench:fx-benchmarks")
+     (intero-targets "mises:lib" "mises:exe:mises" "mises:exe:spike" "mises:test:mises-test")
+     (intero-targets "mtl-style-example:lib" "mtl-style-example:exe:mtl-style-example" "mtl-style-example:test:mtl-style-example-test-suite")
+     (intero-targets "mises:lib" "mises:exe:mises-exe" "mises:test:mises-test")
+     (haskell-indent-spaces . 4)
      (haskell-process-use-ghci . 4)
      (haskell-indent-spaces . 2)
      (haskell-process-type . cabal-repl)))))

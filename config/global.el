@@ -4,7 +4,6 @@
 (require 'mouse)
 ;; (require 'flx-ido)
 (require 'dired-x)
-(require 'paredit)
 (require 'web-mode)
 (require 'auto-complete)
 (require 'ensime)
@@ -73,12 +72,8 @@
                       point-size))))
     (set-face-attribute 'default nil :height size)))
 
-;; (defun ido-disable-line-truncation ()
-  ;; (set (make-local-variable 'truncate-lines) nil))
-
-;; (defun ido-define-keys ()
-  ;; (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  ;; (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
 
 (defun toggle-solarized ()
   (interactive)
@@ -127,7 +122,7 @@
 (defun track-mouse (e))
 
 ;; Copy and Paste
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 
 (unless window-system
   (when (getenv "DISPLAY")
@@ -165,6 +160,9 @@
 (global-set-key "\C-cg" 'writegood-mode)
 (global-set-key "\C-c\C-gg" 'writegood-grade-level)
 (global-set-key "\C-c\C-ge" 'writegood-reading-ease)
+
+(global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt)
 
 ;; Mode specific keybindings
 
@@ -339,7 +337,6 @@
 (global-set-key (kbd "M-c") #'fix-word-capitalize)
 
 ;; TODO organize later
-(autoload 'enable-paredit-mode "paredit" t)
 (global-whitespace-cleanup-mode)
 (indent-guide-global-mode)
-
+(setq scroll-conservatively 1000)
